@@ -98,7 +98,9 @@
           <img src="{{ service.image.url }}" alt="{{ service.name }}">
           <h3>{{ service.name }}</h3>
           <p>{{ service.description }}</p>
-          <a href="#" class="start-button">ابدأ</a>
+          <a href="{% url 'services:run_script' service.id %}" class="start-button">ابدأ</a>
+
+
         </div>
       {% empty %}
         <p style="text-align: center; font-size: 18px;">لا توجد خدمات مضافة بعد.</p>

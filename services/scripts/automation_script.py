@@ -1,41 +1,27 @@
-# services/scripts/automation_script.py
-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.service import Service
 import time
 
-def run_google_search():
-    # ✅ إعداد خيارات المتصفح
+def open_absher():
     options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")  # فتح المتصفح بوضع ملء الشاشة
-    # options.add_argument("--headless")  # ← يمكنك تفعيل هذا للسيرفرات بدون واجهة رسومية
+    options.add_argument("--start-maximized")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--lang=ar")
+    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115 Safari/537.36")
 
-    # ✅ تشغيل المتصفح
     driver = webdriver.Chrome(options=options)
 
     try:
-        # 🔍 التوجه إلى صفحة Google
-        driver.get("https://www.google.com")
-
-        # 🔎 العثور على مربع البحث
-        search_box = driver.find_element(By.NAME, "q")
-
-        # 📝 إدخال كلمة البحث
-        search_term = "أتمتة الخدمات"
-        search_box.send_keys(search_term)
-        search_box.send_keys(Keys.RETURN)
-
-        # ⏳ الانتظار لظهور النتائج
-        time.sleep(5)
+        absher_url = "https://www.absher.sa/wps/portal/individuals/Home/homepublic"
+        driver.get(absher_url)
+        print("✅ تم فتح موقع أبشر بنجاح")
+        time.sleep(10)  # ابقَ في الصفحة 10 ثوانٍ فقط (يمكنك زيادتها)
 
     except Exception as e:
-        print(f"[خطأ] حدث استثناء أثناء تنفيذ البحث: {e}")
+        print(f"❌ حدث خطأ أثناء فتح الموقع: {e}")
 
     finally:
-        # ✅ إغلاق المتصفح في كل الحالات
         driver.quit()
 
-# ✅ تشغيل الدالة إذا تم تنفيذ السكربت بشكل مباشر
 if __name__ == "__main__":
-    run_google_search()
+    open_absher()
